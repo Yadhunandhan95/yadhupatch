@@ -3,9 +3,45 @@
 
   <div class="form-group col-4">
     <label for="name">Name:</label>
+    
     <input type="text" id="name" class="form-control"
     formControlName="name" required>
+    
+    <!-- <script type="text/javascript"> 
+      var Current = 0;
+  
+      document.getElementById("textHere").innerHTML = names[Current];
+  
+      function Prev(){
+          if(Current == 0){
+              Current = names.length - 1;}
+          else{
+              Current--;}
+  
+          document.getElementById("textHere").innerHTML = names[Current];
+      }
+  
+      function Next(){
+          if(Current == names.length - 1){
+              Current = 0}
+          else{
+              Current++;}
+  
+          document.getElementById("textHere").innerHTML = names[Current];
+      }
+  
+  </script>
+    <div id="textHere"></div>
 
+    <div>
+        <button onclick="Next();">Next!</button>
+        <button onclick="Prev();">Previous</button>
+    </div> -->
+    <div class="input-group p-7">
+      
+      <button class="form-control btn-outline-success waves-effect waves-light green" id="name" ng-click="names = names + 1" ng-init="names=0"formControlName="name" type="button"(click)="name">+</button>
+      <button class="btn btn-outline-danger col" type="button"(click)="deleteTask(names)">X</button>
+     
 <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
   class="alert alert-danger">
 
@@ -14,6 +50,7 @@
 </div>
 <div *ngIf="name?.errors?.['minlength']">
   Name must be at least 4 characters long.
+  
 </div>
 </div>
 </div>
@@ -35,6 +72,7 @@ Number must be at least 10 characters long.
 </div>
 <div class="form-group col-4">
   <label for="name">Email:</label>
+  
   <input type="text" id="email" class="form-control"
   formControlName="email" required>
   <div *ngIf="email?.invalid && (email?.dirty || email?.touched)"
