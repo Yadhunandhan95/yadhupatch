@@ -1,30 +1,37 @@
-import { getLocaleDayNames } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
-import { FormGroup,FormBuilder,Validators,FormControl } from '@angular/forms';
+import { FormGroup,FormBuilder,Validators,FormControl, FormArray } from '@angular/forms';
 import { __values } from 'tslib';
 import * as _ from 'underscore';
-
+// interface Info {
+//   content: string;
+//   id?: string;
+//   datemodified?: Date;
+//   isDone?: boolean;
+// }
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  items:FormArray;
   yadhuForm:FormGroup;
   showData:boolean = false;
   public value!: string;
+  
  item_names = [
     "Sanjay",
     "Sedhu",
     "Aravinth",
     "Prabhu",
     "Prem",
-    "JayaPrasath",
-    "Sabari",
-    "Ram",
-    "Kumar",
-    "Gowtham"
-    ]
+    // "JayaPrasath",
+    // "Sabari",
+    // "Ram",
+    // "Kumar",
+    // "Gowtham"
+    ];
     // item_number = [
     // "9098786865",
     // "9098786908",
@@ -50,17 +57,18 @@ export class AppComponent implements OnInit {
     //   "gowtham@yarn.com"
     // ]
   isValidFormSubmitted: boolean;
-
+  ind: any;
+  i = -1;
+ box = document.getElementById('box');
+  info_input: any;
+  infoCollection: any;
+  editValue: boolean = false;
+  inputId: any='';
   ngOnInit(): void {
-    function my(){
-       var i: any
-      if (i === getLocaleDayNames.length) {
-       const i = 0;
-      
-      }
-    }
-   
+
+
     this.yadhuForm = new FormGroup({
+    
       name: new FormControl('', [
         Validators.required,
         Validators.minLength(4)//
@@ -73,9 +81,12 @@ export class AppComponent implements OnInit {
       email: new FormControl('',[
         Validators.required,
         Validators.email,
-        Validators.pattern('^[a-z0-9._%+-]+@[a-z]+.[a-z]{2,3}$')])
-    });
-
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z]+.[a-z]{2,3}$')]),
+       
+        secondaryNumber: this.fb.array([])
+        
+    })
+  
   }
   get name() 
   {
@@ -90,25 +101,63 @@ export class AppComponent implements OnInit {
     return this.yadhuForm.get('email');
   }
 
-      patchUserValues() {
-        
-      
-        this.yadhuForm.patchValue({
-          
-          name: this.item_names[0]
-          // , number: this.item_number[0], email: this.item_email[0]
-          
-        });
-        var name_index = _.findIndex(this.item_names)
-        // var number_index = _.findIndex(this.item_number)
-        // var email_index = _.findIndex(this.item_email)
-        this.item_names.splice(name_index,1);
-        // this.item_number.splice(number_index,1);
-        // this.item_email.splice(email_index,1);
-      }
-      
+  get secondaryNumber()
+  {
+    return this.yadhuForm.get('secondaryNumber') as FormArray;
   }
-    
+
+  
+  constructor(private fb: FormBuilder) {}
+  
+ nextName() {
+      this.i = this.i >= this.item_names.length - 1 ? 0 : this.i + 1;
+      this.item_names[this.i]
+      this.yadhuForm.patchValue({
+      name: this.item_names[this.i]
+     });
+      console.log("test", this.item_names[this.i])
+    }
+    addSecondaryNumber() {
+      this.secondaryNumber.push(this.fb.control(''));
+      }
+      deleteSecondaryNumber(index: number) {
+        this.secondaryNumber.removeAt(index);
+      }
+      // addInfo() {
+      //   if (this.info_input.content != "") {
+      //     var inputValue: Info={
+      //       content:""
+      //     };
+      //     inputValue.datemodified = new Date();
+      //     inputValue.isDone = false;
+      //     inputValue.content = this.info_input.content;
+      //     inputValue.id = _.uniqueId('info_');
+      //     this.infoCollection.push(inputValue);
+      //     this.info_input.content = ""
+      //     console.log('added- ',this.infoCollection)
+      //     this.openSnackBar("Added Successfuly!", "Dismiss");
+      //   }
+      // }
+      // deleteItem(info_:any) {
+      //   console.log('going to delete-',info_)
+      //   var info_index = _.findIndex(this.infoCollection,info_)
+      //   console.log('todo_index del-',info_index)
+      //   this.infoCollection.splice(info_index,1);
+      //   this.openSnackBar("Item Deleted!", "Dismiss");
+      // }
+      // editItem(info:any) {
+      //   var inputValue: Info={
+      //     content:""
+      //   };
+      //   this.info_input.content = info.content;
+      //   this.editValue = true;
+      //   this.inputId = info.id;
+      // }
 
 
+  // openSnackBar(arg0: string, arg1: string) {
+  //   throw new Error('Method not implemented.');
+  // }
+      
+    } 
     
