@@ -1,17 +1,26 @@
 
-<div [formGroup]="yadhuForm" class="row mt-4 user-form">
-
+<div [formGroup]="yadhuForm" class="row mt-4 user-form" id="yad1">
+  <!-- <div formArrayName="items"> -->
   <div class="form-group col-4">
-  
+    <!-- <div *ngFor="let line of items.controls; let i=index"> -->
+    
     <label for="name">Name:</label>
     
-    <input type="text" id="name" class="form-control"
+    <input type="text"  id="name" class="form-control"
     formControlName="name" required>
  
     <div class="input-group p-7">
       
       
-   
+      <tr>
+        <td colspan="2">
+      
+          <button class="form-control btn-outline-success waves-effect waves-light green" id="name" 
+                (click)="nextName()"> 
+                Next Name</button>
+                
+      </tr>
+      
      
 <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
   class="alert alert-danger">
@@ -29,7 +38,13 @@
   <label for="name">Number:</label>
   <input type="text" id="number" class="form-control"
   formControlName="number" required>
+ <button type="button" class="btn-outline-success waves-effect waves-light green" (click)="addSecondaryNumber()">Add</button>
+ <button type="button" class="btn-outline-danger  alert-danger waves-effect" (click)="deleteSecondaryNumber(i)">Remove</button>
+ <div formArrayName="secondaryNumber" *ngFor="let number of secondaryNumber.controls; let i=index">
+  <label for="name">Secondary Number:</label>
+<input type="text" class="form-control my-1" [formControlName]="i">
 
+</div>
 <div *ngIf="number?.invalid && (number?.dirty || number?.touched)"
 class="alert alert-danger">
 
@@ -63,14 +78,13 @@ Number must be at least 10 characters long.
   </label>
 </div>
 </div>
-<tr>
-  <td colspan="2">
+  </div>
 
-    <button class="form-control btn-outline-success waves-effect waves-light green" id="name" 
-          (click)="patchUserValues()">
-          Patch Name</button>
-          
-</tr>
-<div class="row mt-4" *ngIf="showData">
-  {{yadhuForm.value | json}}
+  <form class="output" id="output1"></form>
+  <!-- </div> -->
+
+
+<div class="row mt-4" *ngIf="showData" ngClass="form-control">
+  {{yadhuForm.value| json}}
 </div>
+
