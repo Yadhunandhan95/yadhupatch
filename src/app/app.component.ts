@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormBuilder,Validators,FormControl, FormArray } from '@angular/forms';
 import { __values } from 'tslib';
@@ -68,6 +67,7 @@ export class AppComponent implements OnInit {
   emails1:any
   secnum:any
   i = -1;
+  x = 0;
  box = document.getElementById('box');
   info_input: any;
   editValue: boolean = false;
@@ -167,9 +167,9 @@ item: any;
     //   var list_index = this.listData.length;
     //   this.listData.splice(list_index,1);
     // }
-    deleteItem(item:any) {
-      console.log('going to delete-',item)
-      var index = _.findIndex(this.listData,item)
+    deleteItem(x: any) {
+      console.log('going to delete-',x)
+      var index = _.findIndex(this.listData,x)
     //   let index = this.listData.findIndex(e => e.item === item);
     //  if(index !== -1){
     //   this.listData.splice(index,1);
@@ -177,7 +177,7 @@ item: any;
      
     //  console.log(index); 
       console.log('list_index -del',index)
-      this.listData.splice(index,1);
+      this.listData.splice(this.x,1);
       
     }
     editItem(item: any) {
@@ -208,5 +208,3 @@ item: any;
       }
     }
     }
-  
-  
